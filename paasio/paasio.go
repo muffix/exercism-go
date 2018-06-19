@@ -59,31 +59,33 @@ func NewReadWriteCounter(rw io.ReadWriter) ReadWriteCounter {
 }
 
 func (rc *paasReadCounter) Read(p []byte) (n int, err error) {
-	rc.mutex.Lock()
-	defer rc.mutex.Unlock()
-
 	n, err = rc.read(p)
 	if err != nil {
 		return
 	}
 
+	rc.mutex.Lock()
+
 	rc.ops++
 	rc.count += int64(n)
+
+	rc.mutex.Unlock()
 
 	return
 }
 
 func (wc *paasWriteCounter) Write(p []byte) (n int, err error) {
-	wc.mutex.Lock()
-	defer wc.mutex.Unlock()
-
 	n, err = wc.write(p)
 	if err != nil {
 		return
 	}
 
+	wc.mutex.Lock()
+
 	wc.ops++
 	wc.count += int64(n)
+
+	wc.mutex.Unlock()
 
 	return
 }
