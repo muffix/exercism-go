@@ -9,7 +9,7 @@ type cell struct {
 	value   int
 	reactor *reactor
 
-	c1, c2    *Cell
+	c1, c2    Cell
 	compute   func()
 	callbacks map[callback]struct{}
 }
@@ -48,10 +48,10 @@ func (r *reactor) CreateInput(value int) InputCell {
 }
 
 func (r *reactor) CreateCompute1(c Cell, fn func(int) int) ComputeCell {
-	newCell := cell{reactor: r, c1: &c}
+	newCell := cell{reactor: r, c1: c}
 
 	newCell.compute = func() {
-		newCell.value = fn((*newCell.c1).Value())
+		newCell.value = fn((newCell.c1).Value())
 	}
 
 	newCell.compute()
@@ -62,10 +62,10 @@ func (r *reactor) CreateCompute1(c Cell, fn func(int) int) ComputeCell {
 }
 
 func (r *reactor) CreateCompute2(c1, c2 Cell, fn func(int, int) int) ComputeCell {
-	newCell := cell{reactor: r, c1: &c1, c2: &c2}
+	newCell := cell{reactor: r, c1: c1, c2: c2}
 
 	newCell.compute = func() {
-		newCell.value = fn((*newCell.c1).Value(), (*newCell.c2).Value())
+		newCell.value = fn((newCell.c1).Value(), (newCell.c2).Value())
 	}
 
 	newCell.compute()
