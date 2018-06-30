@@ -146,9 +146,9 @@ func collisionAt(p Pos, states map[string]state) bool {
 		if state.robot.Pos == p {
 			if foundRobot {
 				return true
-			} else {
-				foundRobot = true
 			}
+
+			foundRobot = true
 		}
 	}
 
