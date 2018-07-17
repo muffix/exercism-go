@@ -10,12 +10,6 @@ const (
 	vigenereDecodeOp = -1
 )
 
-// Cipher is the interface for ciphers
-type Cipher interface {
-	Encode(string) string
-	Decode(string) string
-}
-
 // Caesar represents the Caesar cipher
 type Caesar struct{}
 
